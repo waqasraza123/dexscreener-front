@@ -1,26 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<div className="flex items-center justify-center min-h-screen bg-gray-100">
+			<div className="p-8 bg-white rounded shadow-lg">
+				<h1 className="text-2xl font-bold text-gray-800">Hello, React with TypeScript and Tailwind CSS!</h1>
+				<p className="mt-4 text-gray-600">This is a simple app set up with Tailwind CSS.</p>
+			</div>
+		</div>
+	);
 }
 
 export default App;
