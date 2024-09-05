@@ -5,24 +5,27 @@ import TokenTable from '../components/TokenTable';
 import { Token } from '../interfaces/Token';
 
 const Home: React.FC = () => {
-  const { data, isLoading, error } = useQuery<Token[]>({
-    queryKey: ['tokens'],
-    queryFn: fetchTokens,
-  });
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error fetching data</div>;
+    const chainId = 'solana';
 
-  return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4 text-gray-800">Private Dexscreener</h1>
-      {data && (
-        <TokenTable
-          data={data}
-        />
-      )}
-    </div>
-  );
+    const { data, isLoading, error } = useQuery<Token[]>({
+        queryKey: ['tokens'],
+        queryFn: () => fetchTokens(chainId),
+    });
+
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>Error fetching data</div>;
+
+    return (
+        <div className="p-4">
+        <h1 className="text-2xl font-bold mb-4 text-gray-800">Private Dexscreener</h1>
+        {data && (
+            <TokenTable
+            data={data}
+            />
+        )}
+        </div>
+    );
 };
 
 export default Home;

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './views/Home';
 import TokenView from './components/TokenView';
 import SubscriptionPage from './views/SubscriptionPage';
+import SubscriptionFormPage from './views/SubscriptionFormPage';
 
 const App: React.FC = () => {
   return (
@@ -26,11 +27,12 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/:chainId/:contractAddress" element={<TokenView />} />
             <Route path="/subscriptions" element={<SubscriptionPage />} />
+            <Route path="/subscriptions/user-input" element={<SubscriptionFormPage />} />
           </Routes>
         </main>
 
         <footer className="bg-gray-800 text-white p-4 text-center">
-          © 2024 Your Company
+          © 2024
         </footer>
       </div>
     </Router>

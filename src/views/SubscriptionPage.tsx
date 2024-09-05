@@ -2,34 +2,22 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchPrices } from '../services/stripeService';
 import { Price } from '../interfaces/services/stripeService/Price';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { useNavigate } from 'react-router-dom';
 
 const SubscriptionPage: React.FC = () => {
-  const { data, isLoading, error } = useQuery<Price[]>({
-    queryKey: ['prices'],
-    queryFn: fetchPrices,
-  });
+    const navigate = useNavigate();
+    const { data, isLoading, error } = useQuery<Price[]>({
+        queryKey: ['prices'],
+        queryFn: fetchPrices,
+    });
 
-  const handleSubscribe = async (priceId: string) => {
-    try {
-      const response = await fetch('/api/stripe/create-checkout-session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ priceId }),
-      });
+    if (isLoading) return <div><LoadingSpinner /></div>;
+    if (error) return <div>Error loading prices</div>;
 
-      if (!response.ok) {
-        throw new Error('Failed to create checkout session');
-      }
-
-      const { url } = await response.json();
-      window.location.href = url; // Redirect to Stripe Checkout
-    } catch (error) {
-      console.error('Error creating checkout session:', error);
-    }
-  };
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading prices</div>;
+    const handleOrderNowButton = () => {
+        navigate('/subscriptions/user-input');
+    };
 
   return (
     <div className="pt-5" id="pricing">
@@ -53,38 +41,38 @@ const SubscriptionPage: React.FC = () => {
                   : 'ring-1 ring-white/10'
               }`}
             >
-              <div className="flex items-baseline justify-between gap-x-4">
-                <h2 className="text-lg font-semibold leading-8 text-white">
-                  {price.nickname}
-                </h2>
-                {price.metadata.isPopular && (
-                  <p className="rounded-full bg-indigo-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
-                    Most popular
-                  </p>
-                )}
-              </div>
-              <p className="mt-4 text-sm leading-6 text-gray-300">
-                {price.metadata.description}
-              </p>
-              <p className="mt-6 flex items-baseline gap-x-1">
-                <span className="text-4xl font-bold tracking-tight text-white">
-                    €{price.unit_amount ? (price.unit_amount / 100).toFixed(2) : 'N/A'}
-                </span>
-                <span className="text-sm font-semibold leading-6 text-gray-300">
-                  / {price.recurring?.interval}
-                </span>
-              </p>
-              <button
-                onClick={() => handleSubscribe(price.id)}
-                className={`mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
-                  price.metadata.isPopular
-                    ? 'bg-indigo-500 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline-indigo-500'
-                    : 'bg-white/10 text-white hover:bg-white/20 focus-visible:outline-white'
-                }`}
-              >
-                Order Now
-              </button>
-              <ul className="mt-8 space-y-3 text-sm leading-6 text-gray-300 xl:mt-10">
+                <div className="flex items-baseline justify-between gap-x-4">
+                    <h2 className="text-lg font-semibold leading-8 text-white">
+                    {price.nickname}
+                    </h2>
+                    {price.metadata.isPopular && (
+                    <p className="rounded-full bg-indigo-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
+                        Most popular
+                    </p>
+                    )}
+                </div>
+                <p className="mt-4 text-sm leading-6 text-gray-300">
+                    {price.metadata.description}
+                </p>
+                <p className="mt-6 flex items-baseline gap-x-1">
+                    <span className="text-4xl font-bold tracking-tight text-white">
+                        €{price.unit_amount ? (price.unit_amount / 100).toFixed(2) : 'N/A'}
+                    </span>
+                    <span className="text-sm font-semibold leading-6 text-gray-300">
+                    / {price.recurring?.interval}
+                    </span>
+                </p>
+                <button
+                    onClick={() => navigate('/subscriptions/user-input', { state: { priceId: price.id } })}
+                    className={`mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+                        price.metadata.isPopular
+                        ? 'bg-indigo-500 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline-indigo-500'
+                        : 'bg-white/10 text-white hover:bg-white/20 focus-visible:outline-white'
+                    }`}
+                    >
+                        Order Now
+                    </button>
+                <ul className="mt-8 space-y-3 text-sm leading-6 text-gray-300 xl:mt-10">
                     {Object.keys(price.metadata)
                         .filter((key) => key.startsWith("feature_"))
                         .sort((a, b) => a.localeCompare(b))
