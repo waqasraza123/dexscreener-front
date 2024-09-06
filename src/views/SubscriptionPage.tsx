@@ -63,7 +63,7 @@ const SubscriptionPage: React.FC = () => {
                     </span>
                 </p>
                 <button
-                    onClick={() => navigate('/subscriptions/user-input', { state: { priceId: price.id } })}
+                    onClick={() => navigate('/subscriptions/stripe-checkout', { state: { priceId: price.id } })}
                     className={`mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
                         price.metadata.isPopular
                         ? 'bg-indigo-500 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline-indigo-500'

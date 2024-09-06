@@ -21,77 +21,78 @@ const SubscriptionForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const mutation = useMutation<SubscriptionResponse, Error, { email: string; paymentMethodId: string; priceId: string }>({
-    mutationFn: subscriptionService.createSubscription,
-    onSuccess: (data) => {
-      console.log('Subscription successful:', data);
-      // Redirect or show success message
-    },
-    onError: (error) => {
-      console.error('Error creating subscription:', error);
-    },
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!stripe || !elements) {
-      return; // Stripe.js has not loaded yet
-    }
-
-    setIsLoading(true);
-
-    // Get card details
-    const cardElement = elements.getElement(CardElement);
-
-    if (!cardElement) {
-      setIsLoading(false);
-      return;
-    }
-
-    // Create payment method
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: 'card',
-      card: cardElement,
-      billing_details: { email },
+        mutationFn: subscriptionService.createSubscription,
+        onSuccess: (data) => {
+            setIsLoading(false)
+            navigate('/');
+        },
+        onError: (error) => {
+            setIsLoading(false)
+            console.error('Error creating subscription:', error);
+        },
     });
 
-    if (error) {
-      console.error('Error creating payment method:', error);
-      setIsLoading(false);
-      return;
-    }
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
 
-    // Create subscription
-    if (paymentMethod) {
-      mutation.mutate({ email, paymentMethodId: paymentMethod.id, priceId });
-    }
-  };
+        if (!stripe || !elements) {
+            return; // Stripe.js has not loaded yet
+        }
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-4">
-        <label className="block text-gray-700">Email</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Card Details</label>
-        <CardElement className="border p-2 rounded" />
-      </div>
-      <button
-        type="submit"
-        className="w-full bg-indigo-500 text-white py-2 px-4 rounded"
-        disabled={isLoading || !stripe || !elements}
-      >
-        {isLoading ? <LoadingSpinner /> : 'Subscribe'}
-      </button>
-    </form>
-  );
+        setIsLoading(true);
+
+        // Get card details
+        const cardElement = elements.getElement(CardElement);
+
+        if (!cardElement) {
+            setIsLoading(false);
+            return;
+        }
+
+        // Create payment method
+        const { error, paymentMethod } = await stripe.createPaymentMethod({
+            type: 'card',
+            card: cardElement,
+            billing_details: { email },
+        });
+
+        if (error) {
+            console.error('Error creating payment method:', error);
+            setIsLoading(false);
+            return;
+        }
+
+        // Create subscription
+        if (paymentMethod) {
+            mutation.mutate({ email, paymentMethodId: paymentMethod.id, priceId });
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+                <label className="block text-gray-700">Email</label>
+                <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block text-gray-700">Card Details</label>
+                <CardElement className="border p-2 rounded" />
+            </div>
+            <button
+                type="submit"
+                    className="w-full bg-indigo-500 text-white py-2 px-4 rounded"
+                    disabled={isLoading || !stripe || !elements}
+            >
+                {isLoading ? <LoadingSpinner /> : 'Subscribe'}
+            </button>
+        </form>
+    );
 };
 
 const SubscriptionFormPage: React.FC = () => {

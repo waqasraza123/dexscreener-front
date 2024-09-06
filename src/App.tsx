@@ -27,7 +27,7 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/:chainId/:contractAddress" element={<TokenView />} />
             <Route path="/subscriptions" element={<SubscriptionPage />} />
-            <Route path="/subscriptions/user-input" element={<SubscriptionFormPage />} />
+            <Route path="/subscriptions/stripe-checkout" element={<SubscriptionFormPage />} />
           </Routes>
         </main>
 
