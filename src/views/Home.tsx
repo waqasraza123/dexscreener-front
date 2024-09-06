@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchTokens } from '../services/tokenService';
 import TokenTable from '../components/TokenTable';
 import { Token } from '../interfaces/Token';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const Home: React.FC = () => {
 
@@ -13,7 +14,7 @@ const Home: React.FC = () => {
         queryFn: () => fetchTokens(chainId),
     });
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <div><LoadingSpinner /></div>;
     if (error) return <div>Error fetching data</div>;
 
     return (

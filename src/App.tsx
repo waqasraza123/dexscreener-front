@@ -4,6 +4,9 @@ import Home from './views/Home';
 import TokenView from './components/TokenView';
 import SubscriptionPage from './views/SubscriptionPage';
 import SubscriptionFormPage from './views/SubscriptionFormPage';
+import withAuth from './middlewares/withAuth';
+
+const ProtectedSubscriptionFormPage = withAuth(SubscriptionFormPage);
 
 const App: React.FC = () => {
   return (
@@ -27,7 +30,7 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/:chainId/:contractAddress" element={<TokenView />} />
             <Route path="/subscriptions" element={<SubscriptionPage />} />
-            <Route path="/subscriptions/stripe-checkout" element={<SubscriptionFormPage />} />
+            <Route path="/subscriptions/stripe-checkout" element={<ProtectedSubscriptionFormPage />} />
           </Routes>
         </main>
 
