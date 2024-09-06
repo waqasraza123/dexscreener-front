@@ -35,14 +35,14 @@ const SubscriptionPage: React.FC = () => {
           {data?.map((price) => (
             <div
               key={price.id}
-              className={`bg-gray-900 rounded-3xl p-8 xl:p-10 ${
+              className={`bg-gray-100 rounded-3xl p-8 xl:p-10 ${
                 price.metadata.isPopular
                   ? 'bg-white/5 ring-2 ring-indigo-500'
                   : 'ring-1 ring-white/10'
               }`}
             >
                 <div className="flex items-baseline justify-between gap-x-4">
-                    <h2 className="text-lg font-semibold leading-8 text-white">
+                    <h2 className="text-lg font-semibold leading-8 text-black">
                     {price.nickname}
                     </h2>
                     {price.metadata.isPopular && (
@@ -55,10 +55,10 @@ const SubscriptionPage: React.FC = () => {
                     {price.metadata.description}
                 </p>
                 <p className="mt-6 flex items-baseline gap-x-1">
-                    <span className="text-4xl font-bold tracking-tight text-white">
-                        €{price.unit_amount ? (price.unit_amount / 100).toFixed(2) : 'N/A'}
+                    <span className="text-4xl font-bold tracking-tight text-gray-900">
+                        ${price.unit_amount ? (price.unit_amount / 100).toFixed(2) : 'N/A'}
                     </span>
-                    <span className="text-sm font-semibold leading-6 text-gray-300">
+                    <span className="text-sm font-semibold leading-6 text-gray-900">
                     / {price.recurring?.interval}
                     </span>
                 </p>
@@ -67,12 +67,12 @@ const SubscriptionPage: React.FC = () => {
                     className={`mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
                         price.metadata.isPopular
                         ? 'bg-indigo-500 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline-indigo-500'
-                        : 'bg-white/10 text-white hover:bg-white/20 focus-visible:outline-white'
+                        : 'bg-gray-900 text-white hover:bg-green-400 hover:text-white hover:scale-105 hover:shadow-lg transform transition-all duration-100 ease-in-out p-4 rounded-lg'
                     }`}
                     >
                         Order Now
                     </button>
-                <ul className="mt-8 space-y-3 text-sm leading-6 text-gray-300 xl:mt-10">
+                <ul className="mt-8 space-y-3 text-sm leading-6 text-gray-800 xl:mt-10">
                     {Object.keys(price.metadata)
                         .filter((key) => key.startsWith("feature_"))
                         .sort((a, b) => a.localeCompare(b))
@@ -83,7 +83,7 @@ const SubscriptionPage: React.FC = () => {
                             viewBox="0 0 20 20"
                             fill="currentColor"
                             aria-hidden="true"
-                            className="h-6 w-5 flex-none text-white"
+                            className="h-6 w-5 flex-none text-green-400"
                             >
                             <path
                                 fillRule="evenodd"
