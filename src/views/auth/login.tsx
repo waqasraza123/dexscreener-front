@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { login } from '../../services/authService';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const mutation = useMutation({
-        mutationFn: () => login(email, password),
+        mutationFn: () => login(email, password, dispatch),
         onSuccess: () => {
             // Redirect to home or other protected page after successful login
             navigate('/');
