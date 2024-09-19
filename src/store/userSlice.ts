@@ -16,7 +16,7 @@ const userSlice = createSlice({
             state.email = action.payload.email;
             state.isAuthenticated = true;
         },
-        logout: (state) => {
+        logoutUser: (state) => {
             state.uid = null;
             state.email = null;
             state.isAuthenticated = false;
@@ -25,7 +25,7 @@ const userSlice = createSlice({
 });
 
 // Export the actions to be used in components
-export const { loginUser, logout } = userSlice.actions;
+export const { loginUser, logoutUser } = userSlice.actions;
 
 // Export the reducer to be used in the store
 export default userSlice.reducer;

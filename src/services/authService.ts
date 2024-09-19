@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { loginUser } from '../store/userSlice';
+import { loginUser, logoutUser } from '../store/userSlice';
 
 const API_URL = process.env.REACT_APP_API_BASE_URL as string;
 
@@ -23,11 +23,12 @@ export const login = async (email: string, password: string, dispatch: any) => {
 };
 
 
-// export const logout = async (dispatch: AppDispatch) => {
-//     try {
-//         await fetch('/api/logout', { method: 'POST' });
-//         dispatch(clearUser());
-//     } catch (error) {
-//         console.error('Logout failed:', error);
-//     }
-// };
+export const logout = async (dispatch: any) => {
+    try {
+        await axios.post(`${API_URL}/api/auth/logout`);
+        dispatch(logoutUser());
+    } catch (error) {
+        dispatch(logoutUser()); //TODO remove this 
+        console.error('Logout failed:', error);
+    }
+};
