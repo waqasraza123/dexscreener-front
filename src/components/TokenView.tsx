@@ -10,7 +10,7 @@ const TokenView: React.FC = () => {
     const token = location.state as Token;
 
     // Generate random data for 5 days
-    const ohlcData = generateOHLCData(30);
+    const ohlcData = generateOHLCData(287);
 
     return (
         <div className="container mx-auto p-4">

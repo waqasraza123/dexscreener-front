@@ -31,24 +31,26 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ data }) => {
             }
         });
 
-        // Define x and y scales
-        const x = d3
-            .scaleBand() // Use scaleBand for evenly spaced bars
-            .domain(data.map(d => d.date.toString())) // Unique keys for each candle
-            .range([0, width])
-            .padding(0.1); // Adjust spacing between candles
+        // Use d3.scaleTime for x-axis
+        const x = d3.scaleTime()
+            .domain(d3.extent(data, d => d.date) as [Date, Date]) // Extent of the dates
+            .range([0, width]);
 
-        const y = d3
-            .scaleLinear()
+        const y = d3.scaleLinear()
             .domain([d3.min(data, d => d.low)!, d3.max(data, d => d.high)!])
             .range([height, 0]);
+
+        // Dynamically calculate the width of each candle based on the data length
+        const candleWidth = Math.max(2, width / data.length - 1); // Adjust the -1 to change spacing
 
         // Create x and y axes
         svg.append('g')
             .attr('transform', `translate(0,${height})`)
-            .call(d3.axisBottom(x).tickFormat(d => d3.timeFormat('%b %d')(new Date(d))))
+            .call(d3.axisBottom(x)
+                .ticks(d3.timeMonth.every(1))  // Ticks every month
+                .tickFormat(d => d3.timeFormat('%b %d')(new Date(d as Date))))
             .selectAll('text')
-            .attr('transform', 'rotate(-45)')
+            .attr('transform', 'rotate(-65)')
             .style('text-anchor', 'end');
 
         svg.append('g').call(d3.axisLeft(y));
@@ -59,8 +61,8 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ data }) => {
             .enter()
             .append('line')
             .attr('class', 'wick')
-            .attr('x1', d => x(d.date.toString())! + x.bandwidth() / 2) // Center the wick
-            .attr('x2', d => x(d.date.toString())! + x.bandwidth() / 2)
+            .attr('x1', d => x(d.date)! + candleWidth / 2) // Center the wick in the candle
+            .attr('x2', d => x(d.date)! + candleWidth / 2)
             .attr('y1', d => y(d.high))
             .attr('y2', d => y(d.low))
             .attr('stroke', 'black');
@@ -71,9 +73,9 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ data }) => {
             .enter()
             .append('rect')
             .attr('class', 'candlestick')
-            .attr('x', d => x(d.date.toString())!) // Use string key
+            .attr('x', d => x(d.date)!) // Use the x-scale to position the candles
             .attr('y', d => y(d3.max([d.open, d.close])!))
-            .attr('width', x.bandwidth()) // Use the bandwidth for consistent width
+            .attr('width', candleWidth) // Dynamic candle width
             .attr('height', d => Math.abs(y(d.open) - y(d.close)))
             .attr('fill', d => (d.open > d.close ? 'red' : 'green'));
 
