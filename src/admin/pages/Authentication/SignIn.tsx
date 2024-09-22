@@ -174,7 +174,7 @@ const SignIn: React.FC = () => {
                     Sign In to Analytics Dashboard
                 </h2>
 
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                     <label className="mb-2.5 block font-medium text-black dark:text-white">
                         Email
