@@ -38,7 +38,7 @@ const SubscriptionPage: React.FC = () => {
               className={`bg-gray-100 rounded-3xl p-8 xl:p-10 ${
                 price.metadata.isPopular
                   ? 'bg-white/5 ring-2 ring-indigo-500'
-                  : 'ring-1 ring-white/10'
+                  : 'ring-1 ring-primary'
               }`}
             >
                 <div className="flex items-baseline justify-between gap-x-4">
@@ -67,7 +67,7 @@ const SubscriptionPage: React.FC = () => {
                     className={`mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
                         price.metadata.isPopular
                         ? 'bg-indigo-500 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline-indigo-500'
-                        : 'bg-gray-900 text-white hover:bg-green-400 hover:text-white hover:scale-105 hover:shadow-lg transform transition-all duration-100 ease-in-out p-4 rounded-lg'
+                        : 'bg-primary text-white hover:bg-green-400 hover:text-white hover:scale-105 hover:shadow-lg transform transition-all duration-100 ease-in-out p-4 rounded-lg'
                     }`}
                     >
                         Order Now
