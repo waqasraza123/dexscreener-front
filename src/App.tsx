@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './views/Home';
 import Register from './views/auth/register';
-import Login from './views/auth/login';
 import withAuth from './middlewares/withAuth';
 import TokenView from './components/TokenView';
 import SubscriptionPage from './views/SubscriptionPage';
@@ -56,7 +55,6 @@ const App: React.FC = () => {
                                     <Route path="/subscriptions" element={<SubscriptionPage />} />
                                     <Route path="/subscriptions/stripe-checkout" element={<ProtectedSubscriptionFormPage />} />
                                     <Route path="/register" element={<Register />} />
-                                    <Route path="/login" element={<Login />} />
                                     
                                     {/* Additional Routes */}
                                     <Route path="/dashboard" element={<ECommerce />} />
