@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { loginUser, logoutUser } from '../store/userSlice';
-import { useNavigate } from 'react-router-dom';
 
 const API_URL = process.env.REACT_APP_API_BASE_URL as string;
 

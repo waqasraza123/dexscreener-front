@@ -10,7 +10,7 @@ const withAuth = <P extends object>(WrappedComponent: ComponentType<P>) => {
 
         useEffect(() => {
             if (!isAuthenticated) {
-                navigate('/login');
+                navigate('/auth/signin');
             }
         }, [isAuthenticated, navigate]);
 

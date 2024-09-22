@@ -22,6 +22,17 @@ import Alerts from './admin/pages/UiElements/Alerts';
 import Buttons from './admin/pages/UiElements/Buttons';
 
 const ProtectedSubscriptionFormPage = withAuth(SubscriptionFormPage);
+const ProtectedHome = withAuth(Home);
+const ProtectedECommerce = withAuth(ECommerce);
+const ProtectedCalendar = withAuth(Calendar);
+const ProtectedProfile = withAuth(Profile);
+const ProtectedFormElements = withAuth(FormElements);
+const ProtectedFormLayout = withAuth(FormLayout);
+const ProtectedTables = withAuth(Tables);
+const ProtectedSettings = withAuth(Settings);
+const ProtectedChart = withAuth(Chart);
+const ProtectedAlerts = withAuth(Alerts);
+const ProtectedButtons = withAuth(Buttons);
 
 const App: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -51,22 +62,21 @@ const App: React.FC = () => {
                         element={
                             <DefaultLayout>
                                 <Routes>
-                                    <Route path="/" element={<Home />} />
+                                    <Route path="/" element={<ProtectedHome />} />
                                     <Route path="/subscriptions" element={<SubscriptionPage />} />
                                     <Route path="/subscriptions/stripe-checkout" element={<ProtectedSubscriptionFormPage />} />
                                     <Route path="/register" element={<Register />} />
                                     
-                                    {/* Additional Routes */}
-                                    <Route path="/dashboard" element={<ECommerce />} />
-                                    <Route path="/calendar" element={<Calendar />} />
-                                    <Route path="/profile" element={<Profile />} />
-                                    <Route path="/forms/form-elements" element={<FormElements />} />
-                                    <Route path="/forms/form-layout" element={<FormLayout />} />
-                                    <Route path="/tables" element={<Tables />} />
-                                    <Route path="/settings" element={<Settings />} />
-                                    <Route path="/chart" element={<Chart />} />
-                                    <Route path="/ui/alerts" element={<Alerts />} />
-                                    <Route path="/ui/buttons" element={<Buttons />} />
+                                    <Route path="/dashboard" element={<ProtectedECommerce />} />
+                                    <Route path="/calendar" element={<ProtectedCalendar />} />
+                                    <Route path="/profile" element={<ProtectedProfile />} />
+                                    <Route path="/forms/form-elements" element={<ProtectedFormElements />} />
+                                    <Route path="/forms/form-layout" element={<ProtectedFormLayout />} />
+                                    <Route path="/tables" element={<ProtectedTables />} />
+                                    <Route path="/settings" element={<ProtectedSettings />} />
+                                    <Route path="/chart" element={<ProtectedChart />} />
+                                    <Route path="/ui/alerts" element={<ProtectedAlerts />} />
+                                    <Route path="/ui/buttons" element={<ProtectedButtons />} />
                                 </Routes>
                             </DefaultLayout>
                         }
