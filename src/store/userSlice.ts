@@ -4,7 +4,7 @@ import { UserState } from '../interfaces/store/userSlice';
 const initialState: UserState = {
     uid: null,
     email: null,
-    isAuthenticated: false,
+    isAuthenticated: localStorage.getItem('isAuthenticated') === 'true',
 };
 
 const userSlice = createSlice({
@@ -15,11 +15,13 @@ const userSlice = createSlice({
             state.uid = action.payload.uid;
             state.email = action.payload.email;
             state.isAuthenticated = true;
+            localStorage.setItem('isAuthenticated', 'true');
         },
         logoutUser: (state) => {
             state.uid = null;
             state.email = null;
             state.isAuthenticated = false;
+            localStorage.removeItem('isAuthenticated');
         },
     },
 });
