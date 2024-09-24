@@ -13,7 +13,6 @@ import DefaultLayout from './admin/layout/DefaultLayout';
 import ECommerce from './admin/pages/Dashboard/ECommerce';
 import Calendar from './admin/pages/Calendar';
 import Profile from './admin/pages/Profile';
-import Tables from './admin/pages/Tables';
 import Settings from './admin/pages/Settings';
 import Chart from './admin/pages/Chart';
 
@@ -22,7 +21,6 @@ const ProtectedHome = withAuth(Home);
 const ProtectedECommerce = withAuth(ECommerce);
 const ProtectedCalendar = withAuth(Calendar);
 const ProtectedProfile = withAuth(Profile);
-const ProtectedTables = withAuth(Tables);
 const ProtectedSettings = withAuth(Settings);
 const ProtectedChart = withAuth(Chart);
 const ProtectedTokenView = withAuth(TokenView);
@@ -64,7 +62,6 @@ const App: React.FC = () => {
                                     <Route path="/:chainId/:contractAddress" element={<ProtectedTokenView />} />
                                     <Route path="/calendar" element={<ProtectedCalendar />} />
                                     <Route path="/profile" element={<ProtectedProfile />} />
-                                    <Route path="/tables" element={<ProtectedTables />} />
                                     <Route path="/settings" element={<ProtectedSettings />} />
                                     <Route path="/chart" element={<ProtectedChart />} />
                                 </Routes>

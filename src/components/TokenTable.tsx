@@ -14,51 +14,82 @@ const TokenTable: React.FC<TokenTableProps> = ({ data }) => {
   };
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full bg-white shadow-md rounded-lg border border-gray-200">
-        <thead className="bg-gray-100">
-          <tr>
-            {['Token', 'Price', 'Age', 'Txns', 'Volume', 'Makers', '5m', '1h', '6h', '24h', 'Liquidity', 'MCAP'].map(header => (
-              <th key={header} className="py-2 px-4 text-left text-gray-700 font-semibold border-b text-sm">
+    <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
+        Token Performance
+      </h4>
+
+      <div className="flex flex-col">
+        <div className="grid grid-cols-4 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-12">
+          {['Token', 'Price', 'Age', 'Txns', 'Volume', 'Makers', '5m', '1h', '6h', '24h', 'Liquidity', 'MCAP'].map(header => (
+            <div key={header} className="p-2.5 text-center xl:p-5">
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
                 {header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((token, index) => (
-            <tr
-              onClick={() => handleTokenClick(token)}
-              key={index}
-              className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} cursor-pointer`}
-            >
-              <td className="py-2 px-4 border-b text-gray-700 text-sm">
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm font-semibold">{token.token.number}</span>
-                  <img src={token.token.chainLogoUrl} alt="Chain Logo" className="w-4 h-4" />
-                  <img src={token.token.dexLogoUrl} alt="DEX Logo" className="w-4 h-4" />
-                  <span className="text-sm font-semibold">{token.token.tokenSymbol}</span>
-                  <span className="mx-1">/</span>
-                  <span className="text-sm">{token.token.chainSymbol}</span>
-                  <img src={token.token.tokenImageUrl} alt="Token Logo" className="w-4 h-4" />
-                  <span className="text-sm">{token.token.tokenName}</span>
-                </div>
-              </td>
-              <td className="py-2 px-4 border-b text-gray-700 text-sm">{token.price}</td>
-              <td className="py-2 px-4 border-b text-gray-700 text-sm">{token.age}</td>
-              <td className="py-2 px-4 border-b text-gray-700 text-sm">{token.txns}</td>
-              <td className="py-2 px-4 border-b text-gray-700 text-sm">{token.volume}</td>
-              <td className="py-2 px-4 border-b text-gray-700 text-sm">{token.makers}</td>
-              <td className="py-2 px-4 border-b text-gray-700 text-sm">{token['5m']}</td>
-              <td className="py-2 px-4 border-b text-gray-700 text-sm">{token['1h']}</td>
-              <td className="py-2 px-4 border-b text-gray-700 text-sm">{token['6h']}</td>
-              <td className="py-2 px-4 border-b text-gray-700 text-sm">{token['24h']}</td>
-              <td className="py-2 px-4 border-b text-gray-700 text-sm">{token.liquidity}</td>
-              <td className="py-2 px-4 border-b text-gray-700 text-sm">{token.mcap}</td>
-            </tr>
+              </h5>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+
+        {data.map((token, index) => (
+          <div
+            key={index}
+            className={`grid grid-cols-4 sm:grid-cols-12 ${index === data.length - 1 ? '' : 'border-b border-stroke dark:border-strokedark'} cursor-pointer`}
+            onClick={() => handleTokenClick(token)}
+          >
+            <div className="flex items-center gap-3 p-2.5 xl:p-5">
+              <img src={token.token.tokenImageUrl} alt="Token" className="w-6 h-6" />
+              <div>
+                <p className="text-black dark:text-white font-semibold">{token.token.tokenSymbol}</p>
+                <p className="text-gray-600 dark:text-gray-400">{token.token.tokenName}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center p-2.5 xl:p-5">
+              <p className="text-black dark:text-white">${token.price}</p>
+            </div>
+
+            <div className="flex items-center justify-center p-2.5 xl:p-5">
+              <p className="text-black dark:text-white">{token.age}</p>
+            </div>
+
+            <div className="flex items-center justify-center p-2.5 xl:p-5">
+              <p className="text-black dark:text-white">{token.txns}</p>
+            </div>
+
+            <div className="hidden sm:flex items-center justify-center p-2.5 xl:p-5">
+              <p className="text-black dark:text-white">{token.volume}</p>
+            </div>
+
+            <div className="hidden sm:flex items-center justify-center p-2.5 xl:p-5">
+              <p className="text-black dark:text-white">{token.makers}</p>
+            </div>
+
+            <div className="hidden sm:flex items-center justify-center p-2.5 xl:p-5">
+              <p className="text-black dark:text-white">{token['5m']}%</p>
+            </div>
+
+            <div className="hidden sm:flex items-center justify-center p-2.5 xl:p-5">
+              <p className="text-black dark:text-white">{token['1h']}%</p>
+            </div>
+
+            <div className="hidden sm:flex items-center justify-center p-2.5 xl:p-5">
+              <p className="text-black dark:text-white">{token['6h']}%</p>
+            </div>
+
+            <div className="hidden sm:flex items-center justify-center p-2.5 xl:p-5">
+              <p className="text-black dark:text-white">{token['24h']}%</p>
+            </div>
+
+            <div className="hidden sm:flex items-center justify-center p-2.5 xl:p-5">
+              <p className="text-black dark:text-white">${token.liquidity}</p>
+            </div>
+
+            <div className="hidden sm:flex items-center justify-center p-2.5 xl:p-5">
+              <p className="text-black dark:text-white">${token.mcap}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
